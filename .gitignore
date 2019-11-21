@@ -1,2 +1,5 @@
 http_server/target/
 http_server/node_modules/
+
+env/*
+data/

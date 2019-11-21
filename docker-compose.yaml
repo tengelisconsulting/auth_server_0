@@ -3,5 +3,46 @@ services:
 
   http_server:
     build: ./http_server
+    environment:
+      - HTTP_LISTEN_PORT
     ports:
-      - 3000:3000
+      - ${HTTP_LISTEN_PORT}:${HTTP_LISTEN_PORT}
+
+  postgrest:
+    build: ./postgrest
+    expose:
+      - ${API_DB_PORT}
+    environment:
+      - PGHOST
+      - PGPORT
+      - PGDB
+      - API_PG_USER
+      - API_PG_PASSWORD
+      - API_DB_SCHEMA
+      - API_ANON_ROLE
+      - API_DB_POOL
+      - API_DB_POOL_TIMEOUT
+      - API_DB_PORT
+    depends_on:
+      - db
+      - db_schema
+
+  db:
+    image: postgres:12.0-alpine
+    expose:
+      - ${PGPORT}
+    environment:
+      - PGHOST
+      - PGUSER
+      - PGPASSWORD
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  db_schema:
+    build: ./db_schema
+    environment:
+      - PGHOST
+      - PGUSER
+      - PGPASSWORD
+    depends_on:
+      - db

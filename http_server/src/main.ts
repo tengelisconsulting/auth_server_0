@@ -1,4 +1,5 @@
 import * as Koa  from "koa";
+import { env } from "process";
 
 const app = new Koa();
 
@@ -6,5 +7,6 @@ app.use(async (ctx) => {
   ctx.body = 'Hello, world';
 });
 
-console.log('listening on 3000');
-app.listen(3000);
+const port = parseInt(env['HTTP_LISTEN_PORT'])
+console.log(`listending on ${port}`);
+app.listen(port);
