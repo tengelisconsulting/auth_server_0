@@ -1,0 +1,8 @@
+#!/bin/sh
+
+docker-compose run \
+               --rm \
+               --entrypoint psql \
+               db_schema \
+               -h ${PGHOST} \
+               -U ${PGUSER}
