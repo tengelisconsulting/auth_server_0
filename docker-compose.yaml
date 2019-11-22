@@ -8,6 +8,11 @@ services:
       - API_DB_PORT
     ports:
       - ${HTTP_LISTEN_PORT}:${HTTP_LISTEN_PORT}
+    volumes:
+      - ${HOST_PRIVATE_KEY_FILE}:/srv/host_private_key
+
+  # jwt_generator:
+  #   build: ./jwt_generator
 
   postgrest:
     build: ./postgrest
