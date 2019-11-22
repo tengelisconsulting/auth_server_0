@@ -5,6 +5,7 @@ services:
     build: ./http_server
     environment:
       - HTTP_LISTEN_PORT
+      - API_DB_PORT
     ports:
       - ${HTTP_LISTEN_PORT}:${HTTP_LISTEN_PORT}
 
