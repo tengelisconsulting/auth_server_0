@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "webpack",
-    "dev-run": "ts-node ./src/main.ts"
+    "dev-run": "IS_DEV=1 ts-node ./src/main.ts"
   },
   "keywords": [],
   "author": "",
