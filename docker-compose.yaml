@@ -19,8 +19,8 @@ services:
   postgrest:
     build: ./postgrest
     network_mode: "host"
-    expose:
-      - ${API_DB_PORT}
+    # expose:
+    #   - ${API_DB_PORT}
     environment:
       - PGHOST
       - PGPORT
@@ -40,8 +40,8 @@ services:
   db:
     image: postgres:12.0-alpine
     network_mode: "host"
-    expose:
-      - ${PGPORT}
+    # expose:
+    #   - ${PGPORT}
     environment:
       - PGHOST
       - PGUSER

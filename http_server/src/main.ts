@@ -5,6 +5,7 @@ import * as KoaRouter from 'koa-router';
 import * as koaBodyParser from 'koa-bodyparser'
 import { get_env } from './lib/core/get_env';
 import { authneticate_username_pass } from './lib/handlers/authenticate';
+import { enable_cors } from './lib/middleware/enable_cors';
 
 
 const app_env = get_env();
@@ -16,6 +17,7 @@ router
 ;
 
 app
+  .use(enable_cors)
   .use(koaBodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
