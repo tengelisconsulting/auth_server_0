@@ -6,15 +6,15 @@ CREATE FUNCTION api.check_username_password(
 RETURNS TEXT
 AS $$
 DECLARE
-  v_pw_hash       api.ac_user.password_hash%TYPE;
-  v_user_id       api.ac_user.user_id%TYPE;
+  v_pw_hash       internal.ac_user.password_hash%TYPE;
+  v_user_id       internal.ac_user.user_id%TYPE;
 BEGIN
   BEGIN
     SELECT password_hash,
            user_id
       INTO v_pw_hash,
            v_user_id
-      FROM api.ac_user
+      FROM internal.ac_user
      WHERE username = p_username
     ;
     EXCEPTION
