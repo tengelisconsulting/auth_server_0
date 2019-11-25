@@ -1,6 +1,15 @@
 #!/bin/sh
 
-find /srv/app/def/extensions -name '*.sql' | xargs -i psql -h ${PGHOST} -U ${PGUSER} -f '{}'
-find /srv/app/def/schemas -name '*.sql' | xargs -i psql -h ${PGHOST} -U ${PGUSER} -f '{}'
-find /srv/app/def/tables -name '*.sql' | xargs -i psql -h ${PGHOST} -U ${PGUSER} -f '{}'
-find /srv/app/def/functions -name '*.sql' | xargs -i psql -h ${PGHOST} -U ${PGUSER} -f '{}'
+execute_all_sql_at_root() {
+    for f in $(find "${1}" -name '*.sql'); do
+        echo "${f}"
+        psql -h ${PGHOST} -U ${PGUSER} -f "${f}"
+    done
+
+}
+
+execute_all_sql_at_root /srv/app/def/extensions
+execute_all_sql_at_root /srv/app/def/schemas
+execute_all_sql_at_root /srv/app/def/tables
+execute_all_sql_at_root /srv/app/def/views
+execute_all_sql_at_root /srv/app/def/functions

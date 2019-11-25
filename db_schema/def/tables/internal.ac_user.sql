@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS api.ac_user (
+CREATE TABLE IF NOT EXISTS internal.ac_user (
   user_id            UUID              NOT NULL
     DEFAULT uuid_generate_v1mc(),
   username           TEXT              NOT NULL
@@ -14,4 +14,4 @@ CREATE TABLE IF NOT EXISTS api.ac_user (
   UNIQUE (username)
 );
 
-COMMENT ON TABLE api.ac_user IS 'An app user';
+COMMENT ON TABLE internal.ac_user IS 'An app user';

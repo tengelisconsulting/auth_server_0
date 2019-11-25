@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS api.ac_add_user;
-CREATE FUNCTION api.ac_add_user(
+DROP FUNCTION IF EXISTS internal.ac_add_user;
+CREATE FUNCTION internal.ac_add_user(
   IN   p_username      VARCHAR,
   IN   p_password      VARCHAR
 )
@@ -9,7 +9,7 @@ DECLARE
   v_user_id     UUID    := uuid_generate_v1mc();
 BEGIN
   INSERT
-    INTO api.ac_user (
+    INTO internal.ac_user (
            user_id,
            username,
            password_hash
