@@ -1,32 +1,33 @@
-import { Handler } from "../types/Handler";
-import { http_get } from "../core/http_request";
+import * as Koa from "koa";
+
+import { get_postgrest } from "../core/http/req_postgrest";
+import { generate_jwt } from "../core/jwt";
 import { get_env } from "../core/get_env";
-import { generate_jwt } from "../core/generate_jwt";
-import { get_private_key } from "../core/get_private_key";
 
 
-export const authneticate_username_pass: Handler = async (ctx, _next) => {
-  const app_env = get_env();
+export async function authneticate_username_pass(
+  ctx: Koa.ParameterizedContext<any>, _next: Koa.Next
+) {
   try {
     const username: string = ctx.request.body.username;
     const password: string = ctx.request.body.password;
-    const user_id = await http_get(
-      `http://${app_env.api_db_host}:${app_env.api_db_port}/rpc/check_username_password?p_username=${username}&p_password=${password}`
+    const user_id = await get_postgrest(
+      `/rpc/check_username_password?p_username=${username}&p_password=${password}`
     );
-    if (user_id) {
-      const token = await generate_jwt(
-        user_id, get_private_key()
-      );
-      ctx.body = {
-        token: token,
-      };
-    } else {
-      ctx.status = 401;
-      ctx.body = 'FAILURE';
+    if (!user_id) {
+      ctx.throw(401, 'Failure to authenticate');
     }
+    const token = await generate_jwt(user_id);
+    ctx.body = {
+      token: token,
+    };
+    ctx.cookies.set(
+      get_env().auth_cookie_name,
+      token,
+      { httpOnly: true, }
+    );
   } catch (e) {
     console.trace(e);
-    ctx.status = 401;
-    ctx.body = 'FAILURE';
+    ctx.throw(401, 'Failure to authenticate');
   }
 }
