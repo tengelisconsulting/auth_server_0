@@ -13,3 +13,4 @@ execute_all_sql_at_root /srv/app/def/schemas
 execute_all_sql_at_root /srv/app/def/tables
 execute_all_sql_at_root /srv/app/def/views
 execute_all_sql_at_root /srv/app/def/functions
+execute_all_sql_at_root /srv/app/def/data
