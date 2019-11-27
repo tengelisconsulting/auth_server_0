@@ -24,7 +24,7 @@ export async function authneticate_username_pass(
     ctx.cookies.set(
       get_env().auth_cookie_name,
       token,
-      { httpOnly: true, }
+      // { httpOnly: true, }
     );
   } catch (e) {
     console.trace(e);
